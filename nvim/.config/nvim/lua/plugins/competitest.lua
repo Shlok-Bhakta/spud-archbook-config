@@ -49,7 +49,7 @@ return {
         running_directory = ".",
         testcases_directory = ".",
         compile_command = {
-          c = { exec = "gcc", args = { "-Wall", "$(FABSPATH)", "-o", "$(ABSDIR)/solution" } },
+          c = { exec = "gcc", args = { "-Wall", "$(FABSPATH)", "-o", "$(FNOEXT).bin" } },
           cpp = {
             exec = "clang++",
             args = {
@@ -59,16 +59,16 @@ return {
               "-include-pch", pch_file,
               "$(FABSPATH)",
               "-o",
-              "$(ABSDIR)/solution",
+              "$(FNOEXT).bin",
             },
           },
-          rust = { exec = "rustc", args = { "$(FABSPATH)", "-o", "$(ABSDIR)/solution" } },
+          rust = { exec = "rustc", args = { "$(FABSPATH)", "-o", "$(FNOEXT).bin" } },
           java = { exec = "javac", args = { "$(FABSPATH)" } },
         },
         run_command = {
-          c    = { exec = vim.fn.expand("~/dotfiles/run-and-clean.sh"), args = { "$(ABSDIR)/solution" } },
-          cpp  = { exec = vim.fn.expand("~/dotfiles/run-and-clean.sh"), args = { "$(ABSDIR)/solution" } },
-          rust = { exec = vim.fn.expand("~/dotfiles/run-and-clean.sh"), args = { "$(ABSDIR)/solution" } },
+          c    = { exec = vim.fn.expand("~/dotfiles/run-and-clean.sh"), args = { "./$(FNOEXT).bin" } },
+          cpp  = { exec = vim.fn.expand("~/dotfiles/run-and-clean.sh"), args = { "./$(FNOEXT).bin" } },
+          rust = { exec = vim.fn.expand("~/dotfiles/run-and-clean.sh"), args = { "./$(FNOEXT).bin" } },
           python = { exec = "python", args = { "$(FNAME)" } },
           java = { exec = "java", args = { "$(FNOEXT)" } },
         },

@@ -91,25 +91,45 @@ return {
       local watch_augroup = vim.api.nvim_create_augroup("CompetitestWatch", { clear = true })
       local watching = {} -- bufnr -> true/false
 
+      local function enable_watch(buf)
+        if watching[buf] then return end
+        watching[buf] = true
+        vim.api.nvim_create_autocmd("BufWritePost", {
+          group = watch_augroup,
+          buffer = buf,
+          callback = function()
+            if watching[buf] then
+              vim.cmd("CompetiTest run")
+            end
+          end,
+          desc = "CompetiTest auto-run on save",
+        })
+      end
+
+      -- enable watch automatically for all cpp buffers
+      vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
+        group = watch_augroup,
+        pattern = "*.cpp",
+        callback = function(ev)
+          enable_watch(ev.buf)
+        end,
+        desc = "CompetiTest auto-enable watch on cpp files",
+      })
+
+      -- also enable for any cpp buffer already open when plugin loads
+      for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+        if vim.bo[buf].filetype == "cpp" then
+          enable_watch(buf)
+        end
+      end
+
       vim.keymap.set("n", "<leader>Cw", function()
         local buf = vim.api.nvim_get_current_buf()
         if watching[buf] then
           watching[buf] = false
-          -- remove just this buffer's autocmd by recreating the group
-          -- (we track per-buffer via the callback check above)
           vim.notify("CompetiTest: stopped watching " .. vim.fn.expand("%:t"), vim.log.levels.INFO)
         else
-          watching[buf] = true
-          vim.api.nvim_create_autocmd("BufWritePost", {
-            group = watch_augroup,
-            buffer = buf,
-            callback = function()
-              if watching[buf] then
-                vim.cmd("CompetiTest run")
-              end
-            end,
-            desc = "CompetiTest auto-run on save",
-          })
+          enable_watch(buf)
           vim.notify("CompetiTest: watching " .. vim.fn.expand("%:t"), vim.log.levels.INFO)
         end
       end, { desc = "Toggle auto-run on save" })

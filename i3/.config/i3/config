@@ -17,7 +17,7 @@ exec --no-startup-id feh --bg-fill ~/.config/i3/wallpaper.jpg || feh --bg-color 
 exec --no-startup-id dunst
 exec --no-startup-id picom --daemon
 exec_always --no-startup-id ~/.config/polybar/launch.sh
-exec --no-startup-id xclip
+exec --no-startup-id greenclip daemon
 exec --no-startup-id vesktop
 
 # ── Catppuccin Mocha Colors ───────────────────────────────────────────────────
@@ -59,7 +59,7 @@ bindsym $mod+c          kill
 bindsym $mod+e          exec $fileManager
 bindsym $mod+f          floating toggle
 bindsym $mod+w          exec rofi -show drun
-bindsym $mod+v          exec xclip -selection clipboard -o | rofi -dmenu | xclip -selection clipboard
+bindsym $mod+v          exec rofi -modi "clipboard:greenclip print" -show clipboard -run-command '{cmd}'
 bindsym $mod+b          exec firefox
 bindsym $mod+y          exec code
 bindsym $mod+l          exec i3lock --color=1e1e2e

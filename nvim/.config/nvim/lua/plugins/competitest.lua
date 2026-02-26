@@ -21,13 +21,26 @@ return {
       { "<leader>Cs", "<cmd>CompetiTest receive stop<cr>",         desc = "Stop receiving" },
     },
     config = function()
+      local cpp_dump_include = vim.fn.expand("~/dotfiles/cpp-dump")
       require("competitest").setup({
         runner_ui = {
           interface = "popup",
         },
         compile_command = {
           c = { exec = "gcc", args = { "-Wall", "$(FNAME)", "-o", "$(FNOEXT)" } },
-          cpp = { exec = "g++", args = { "-Wall", "$(FNAME)", "-o", "$(FNOEXT)" } },
+          cpp = {
+            exec = "g++",
+            args = {
+              "-std=c++23",
+              "-D_GLIBCXX_DEBUG",
+              "-DLOCAL_DEBUG",
+              "-g",
+              "-I" .. cpp_dump_include,
+              "$(FNAME)",
+              "-o",
+              "$(FNOEXT)",
+            },
+          },
           rust = { exec = "rustc", args = { "$(FNAME)" } },
           java = { exec = "javac", args = { "$(FNAME)" } },
         },
@@ -48,6 +61,8 @@ return {
         open_received_problems = true,
         open_received_contests = true,
         testcases_auto_detect_storage = true,
+        template_file = { cpp = vim.fn.expand("~/.config/nvim/templates/cp.cpp") },
+        evaluate_template_modifiers = true,
       })
     end,
   },

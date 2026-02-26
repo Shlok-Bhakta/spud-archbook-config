@@ -24,6 +24,7 @@ return {
     },
     config = function()
       local cpp_dump_include = vim.fn.expand("~/dotfiles/cpp-dump")
+      local pch_file = vim.fn.expand("~/dotfiles/pch/stdc++.h.pch")
       require("competitest").setup({
         runner_ui = {
           interface = "split",
@@ -50,13 +51,12 @@ return {
         compile_command = {
           c = { exec = "gcc", args = { "-Wall", "$(FABSPATH)", "-o", "$(FNOEXT)" } },
           cpp = {
-            exec = "g++",
+            exec = "clang++",
             args = {
               "-std=c++23",
-              "-D_GLIBCXX_DEBUG",
               "-DLOCAL_DEBUG",
-              "-g",
               "-I" .. cpp_dump_include,
+              "-include-pch", pch_file,
               "$(FABSPATH)",
               "-o",
               "$(FNOEXT)",

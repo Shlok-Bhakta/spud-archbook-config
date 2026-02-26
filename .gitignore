@@ -1,0 +1,4 @@
+# precompiled header binaries — machine and compiler-version specific,
+# rebuild with ./setup-pch.sh after cloning on a new machine
+pch/*.pch
+pch/*.gch

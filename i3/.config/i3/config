@@ -1,0 +1,165 @@
+# i3 config - Catppuccin Mocha
+# Translated from Hyprland/NixOS config
+
+set $mod Mod4
+set $terminal kitty
+set $fileManager thunar
+set $menu rofi
+
+# ── Fonts ──────────────────────────────────────────────────────────────────────
+font pango:CaskaydiaCove Nerd Font 10
+
+# ── Autostart ─────────────────────────────────────────────────────────────────
+exec --no-startup-id dex --autostart --environment i3
+exec --no-startup-id nm-applet
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --color=1e1e2e --nofork
+exec --no-startup-id feh --bg-fill ~/.config/i3/wallpaper.jpg || feh --bg-color '#1e1e2e'
+exec --no-startup-id dunst
+exec --no-startup-id picom --daemon
+exec --no-startup-id xclip
+exec --no-startup-id vesktop
+
+# ── Catppuccin Mocha Colors ───────────────────────────────────────────────────
+# class                 border    bg        text      indicator child_border
+client.focused          #8aadf4   #1e1e2e   #cdd6f4   #91d7e3   #8aadf4
+client.focused_inactive #24273a   #1e1e2e   #cdd6f4   #24273a   #24273a
+client.unfocused        #24273a   #1e1e2e   #6c7086   #24273a   #24273a
+client.urgent           #f38ba8   #1e1e2e   #cdd6f4   #f38ba8   #f38ba8
+
+# ── Borders / Gaps / No title bars ────────────────────────────────────────────
+default_border pixel 2
+default_floating_border pixel 2
+hide_edge_borders smart
+gaps inner 5
+gaps outer 5
+
+# ── Volume (pamixer) ──────────────────────────────────────────────────────────
+bindsym XF86AudioRaiseVolume exec --no-startup-id pamixer -i 5 && notify-send -h int:value:$(pamixer --get-volume) -h string:synchronous:volume "Volume" "$(pamixer --get-volume)%"
+bindsym XF86AudioLowerVolume exec --no-startup-id pamixer -d 5 && notify-send -h int:value:$(pamixer --get-volume) -h string:synchronous:volume "Volume" "$(pamixer --get-volume)%"
+bindsym XF86AudioMute        exec --no-startup-id pamixer -t && notify-send -h string:synchronous:volume "Volume" "Toggled mute"
+bindsym XF86AudioMicMute     exec --no-startup-id pamixer --default-source -t
+
+# ── Brightness (brightnessctl) ────────────────────────────────────────────────
+bindsym XF86MonBrightnessUp   exec --no-startup-id brightnessctl set +5% && notify-send -h int:value:$(brightnessctl -m | awk -F, '{print substr($4,0,length($4)-1)}') -h string:synchronous:brightness "Brightness" "$(brightnessctl -m | awk -F, '{print substr($4,0,length($4)-1)}')%"
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%- && notify-send -h int:value:$(brightnessctl -m | awk -F, '{print substr($4,0,length($4)-1)}') -h string:synchronous:brightness "Brightness" "$(brightnessctl -m | awk -F, '{print substr($4,0,length($4)-1)}')%"
+
+# ── Media Keys ────────────────────────────────────────────────────────────────
+bindsym XF86AudioPlay  exec --no-startup-id playerctl play-pause
+bindsym XF86AudioNext  exec --no-startup-id playerctl next
+bindsym XF86AudioPrev  exec --no-startup-id playerctl previous
+
+# ── Mouse drag for floating ───────────────────────────────────────────────────
+floating_modifier $mod
+tiling_drag modifier titlebar
+
+# ── App Keybinds ──────────────────────────────────────────────────────────────
+bindsym $mod+q          exec $terminal
+bindsym $mod+c          kill
+bindsym $mod+e          exec $fileManager
+bindsym $mod+f          floating toggle
+bindsym $mod+w          exec rofi -show drun
+bindsym $mod+v          exec xclip -selection clipboard -o | rofi -dmenu | xclip -selection clipboard
+bindsym $mod+b          exec firefox
+bindsym $mod+y          exec code
+bindsym $mod+l          exec i3lock --color=1e1e2e
+bindsym $mod+t          exec rofimoji
+bindsym $mod+Shift+f    fullscreen toggle
+bindsym $mod+Shift+s    exec --no-startup-id maim -s | xclip -selection clipboard -t image/png && notify-send "Screenshot" "Copied to clipboard"
+# bindsym $mod+Shift+c  exec --no-startup-id xcolor | xclip -selection clipboard && notify-send "Color Picker" "Copied to clipboard"
+# install xcolor (1MB) to enable: sudo pacman -S xcolor
+bindsym $mod+Ctrl+r     exec rofi -show calc -modi calc -no-show-match -no-sort
+bindsym Control+mod1+Delete exec ~/.config/rofi/plugins/powermenu.sh
+
+# ── Focus ─────────────────────────────────────────────────────────────────────
+bindsym $mod+Left   focus left
+bindsym $mod+Right  focus right
+bindsym $mod+Up     focus up
+bindsym $mod+Down   focus down
+
+# ── Move ──────────────────────────────────────────────────────────────────────
+bindsym $mod+Shift+Left   move left
+bindsym $mod+Shift+Right  move right
+bindsym $mod+Shift+Up     move up
+bindsym $mod+Shift+Down   move down
+
+# ── Resize (Super+Alt+arrows, matches Hyprland resizeactive) ──────────────────
+bindsym $mod+mod1+Right resize grow   width  15 px or 15 ppt
+bindsym $mod+mod1+Left  resize shrink width  15 px or 15 ppt
+bindsym $mod+mod1+Up    resize shrink height 15 px or 15 ppt
+bindsym $mod+mod1+Down  resize grow   height 15 px or 15 ppt
+
+# ── Layout ────────────────────────────────────────────────────────────────────
+bindsym $mod+j          split toggle
+bindsym $mod+p          layout toggle split tabbed
+bindsym $mod+space      focus mode_toggle
+bindsym $mod+a          focus parent
+bindsym $mod+Shift+r    restart
+bindsym $mod+Shift+e    exec "i3-nagbar -t warning -m 'Exit i3?' -B 'Yes' 'i3-msg exit'"
+bindsym $mod+Shift+F5   reload
+
+# ── Scratchpad (replaces Hyprland special:magic workspace) ────────────────────
+bindsym $mod+d             move scratchpad
+bindsym $mod+Shift+d       scratchpad show
+
+# ── Workspaces ────────────────────────────────────────────────────────────────
+set $ws1  "1"
+set $ws2  "2"
+set $ws3  "3"
+set $ws4  "4"
+set $ws5  "5"
+set $ws6  "6"
+set $ws7  "7"
+set $ws8  "8"
+set $ws9  "9"
+set $ws10 "10"
+
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
+
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10
+
+# ── Mouse workspace scroll ────────────────────────────────────────────────────
+bindsym --whole-window $mod+button4 workspace prev
+bindsym --whole-window $mod+button5 workspace next
+
+# ── Mouse window ops ──────────────────────────────────────────────────────────
+bindsym --whole-window $mod+button2 floating toggle
+
+# ── Window Rules ─────────────────────────────────────────────────────────────
+for_window [class=".*"] border pixel 2
+for_window [floating] border pixel 2
+
+# ── Bar ───────────────────────────────────────────────────────────────────────
+bar {
+    status_command i3status
+    position top
+    font pango:CaskaydiaCove Nerd Font 10
+    colors {
+        background #1e1e2e
+        statusline #cdd6f4
+        separator  #45475a
+        # class             border    bg        text
+        focused_workspace   #8aadf4   #1e1e2e   #cdd6f4
+        active_workspace    #24273a   #1e1e2e   #cdd6f4
+        inactive_workspace  #24273a   #1e1e2e   #6c7086
+        urgent_workspace    #f38ba8   #1e1e2e   #cdd6f4
+        binding_mode        #cba6f7   #1e1e2e   #cdd6f4
+    }
+}

@@ -1,0 +1,173 @@
+/* ── Catppuccin Mocha ── */
+* {
+    window-width:        900px;
+    window-height:       550px;
+    window-border:       1.75px;
+    window-border-color: @surface2;
+    window-border-radius: 12px;
+    window-bg-color:     rgba(30, 30, 46, 0.95);
+
+    rosewater: #f5e0dc;
+    flamingo:  #f2cdcd;
+    pink:      #f5c2e7;
+    mauve:     #cba6f7;
+    red:       #f38ba8;
+    maroon:    #eba0ac;
+    peach:     #fab387;
+    yellow:    #f9e2af;
+    green:     #a6e3a1;
+    teal:      #94e2d5;
+    sky:       #89dceb;
+    sapphire:  #74c7ec;
+    blue:      #89b4fa;
+    lavender:  #b4befe;
+    text:      #cdd6f4;
+    subtext1:  #bac2de;
+    subtext0:  #a6adc8;
+    overlay2:  #9399b2;
+    overlay1:  #7f849c;
+    overlay0:  #6c7086;
+    surface2:  #585b70;
+    surface1:  #45475a;
+    surface0:  #313244;
+    base:      #1e1e2e;
+    mantle:    #181825;
+    crust:     #11111b;
+}
+
+window {
+    width:            900px;
+    background-color: @crust;
+    border-radius:    0px;
+}
+
+mainbox {
+    children:         [innerbox];
+    background-color: @surface0;
+    padding:          1px;
+}
+
+innerbox {
+    background-color: @crust;
+    children:         [inputbar, message, listview, footer];
+    spacing:          -10px;
+}
+
+inputbar {
+    children:         [entry];
+    background-color: transparent;
+}
+
+entry {
+    placeholder-color: @overlay0;
+    padding:           18px 14px;
+    margin:            8px;
+    text-color:        @flamingo;
+    background-color:  @base;
+}
+
+message {
+    background-color: @base;
+    font:             "CaskaydiaCove Nerd Font";
+    padding:          4px 14px;
+    margin:           8px;
+    text-color:       @text;
+}
+
+listview {
+    padding:          2px;
+    margin:           8px;
+    lines:            7;
+    spacing:          5px;
+    background-color: @base;
+    columns:          2;
+}
+
+element {
+    padding:          12px;
+    spacing:          10px;
+    children:         [element-icon, element-text];
+    background-color: @base;
+}
+
+element selected {
+    background-color: @surface1;
+}
+
+element hover {
+    background-color: @mantle;
+    text-color:       @rosewater;
+}
+
+element-icon {
+    size:             30px;
+    background-color: transparent;
+    text-color:       inherit;
+}
+
+element-text {
+    font:             "CaskaydiaCove Nerd Font 16px";
+    vertical-align:   0.5;
+    text-color:       @subtext0;
+    background-color: transparent;
+}
+
+element-text selected {
+    text-color: @flamingo;
+}
+
+element-text hover {
+    text-color: @rosewater;
+}
+
+footer {
+    children:         [textbox-archicon, spacer, textbox-btw];
+    expand:           false;
+    orientation:      horizontal;
+    padding:          5px 10px;
+    margin:           8px;
+    background-color: @base;
+}
+
+textbox-archicon {
+    expand:           false;
+    str:              " ";
+    background-color: transparent;
+    text-color:       #89b4fa;
+    font:             "CaskaydiaCove Nerd Font 36px";
+    vertical-align:   0.5;
+}
+
+textbox-btw {
+    expand:           false;
+    str:              "I Use Arch Btw";
+    background-color: transparent;
+    text-color:       @blue;
+    font:             "CaskaydiaCove Nerd Font Bold 20px";
+    vertical-align:   0.5;
+}
+
+spacer {
+    str:              "";
+    expand:           true;
+    background-color: transparent;
+}
+
+textbox {
+    expand:           false;
+    str:              "Application";
+    background-color: transparent;
+    text-color:       @overlay0;
+    font:             "CaskaydiaCove Nerd Font 30px";
+    vertical-align:   0.5;
+}
+
+textbox-separator {
+    str:              "|";
+    expand:           true;
+    background-color: transparent;
+    margin:           0 6px;
+    font:             "CaskaydiaCove Nerd Font 14px";
+    vertical-align:   0.5;
+    text-color:       @surface2;
+}

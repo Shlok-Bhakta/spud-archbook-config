@@ -15,7 +15,7 @@ chosen=$(printf '%s\n' "$lock" "$logout" "$suspend" "$reboot" "$shutdown" | rofi
     -theme "~/.config/rofi/theme.rasi")
 
 case "$chosen" in
-    "$lock")     i3lock --color=1e1e2e ;;
+    "$lock")     ~/.config/i3/lock.sh ;;
     "$logout")   i3-msg exit ;;
     "$suspend")  systemctl suspend ;;
     "$reboot")   systemctl reboot ;;

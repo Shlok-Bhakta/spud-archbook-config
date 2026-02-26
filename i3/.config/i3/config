@@ -12,7 +12,7 @@ font pango:CaskaydiaCove Nerd Font 10
 # ── Autostart ─────────────────────────────────────────────────────────────────
 exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id nm-applet
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --color=1e1e2e --nofork
+exec --no-startup-id xss-lock --transfer-sleep-lock -- ~/.config/i3/lock.sh
 exec --no-startup-id feh --bg-fill ~/.config/i3/wallpaper.jpg || feh --bg-color '#1e1e2e'
 exec --no-startup-id dunst
 exec --no-startup-id picom --daemon
@@ -62,7 +62,7 @@ bindsym $mod+w          exec rofi -show drun
 bindsym $mod+v          exec rofi -modi "clipboard:greenclip print" -show clipboard -run-command '{cmd}'
 bindsym $mod+b          exec firefox
 bindsym $mod+y          exec code
-bindsym $mod+l          exec i3lock --color=1e1e2e
+bindsym $mod+l          exec ~/.config/i3/lock.sh
 bindsym $mod+t          exec rofimoji
 bindsym $mod+Shift+f    fullscreen toggle
 bindsym $mod+Shift+s    exec --no-startup-id maim -s | xclip -selection clipboard -t image/png && notify-send "Screenshot" "Copied to clipboard"

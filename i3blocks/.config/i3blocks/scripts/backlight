@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# subtext1 - backlight
+BRIGHT=$(brightnessctl -m 2>/dev/null | awk -F, '{print substr($4,0,length($4)-1)}')
+if [ -z "$BRIGHT" ]; then exit 0; fi
+if   [ "$BRIGHT" -ge 75 ]; then ICON=""
+elif [ "$BRIGHT" -ge 50 ]; then ICON=""
+elif [ "$BRIGHT" -ge 25 ]; then ICON=""
+else ICON=""; fi
+echo "<span color='#bac2de'>$ICON $BRIGHT%</span>"

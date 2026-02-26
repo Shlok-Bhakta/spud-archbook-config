@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# sky - matches waybar custom/weather
+if ! ping -c1 -W2 wttr.in &>/dev/null; then exit 0; fi
+WEATHER=$(curl -sf 'https://wttr.in/?format=1' | sed 's/   / /g' | sed 's/+//g')
+[ -n "$WEATHER" ] && echo "<span color='#89dceb'>$WEATHER</span>"

@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# green/yellow/red - matches waybar battery
+BAT_PATH=$(ls /sys/class/power_supply/BAT*/capacity 2>/dev/null | head -1)
+if [ -z "$BAT_PATH" ]; then exit 0; fi
+
+CAP=$(cat "$BAT_PATH")
+STATUS=$(cat "${BAT_PATH/capacity/status}")
+
+if [ "$STATUS" = "Charging" ]; then
+    echo "<span color='#a6e3a1'>󰢜 $CAP%</span>"
+elif [ "$STATUS" = "Full" ]; then
+    echo "<span color='#a6e3a1'> $CAP%</span>"
+elif [ "$CAP" -le 15 ]; then
+    echo "<span color='#f38ba8'> $CAP%</span>"
+elif [ "$CAP" -le 30 ]; then
+    echo "<span color='#f9e2af'> $CAP%</span>"
+elif [ "$CAP" -le 60 ]; then
+    echo "<span color='#a6e3a1'> $CAP%</span>"
+else
+    echo "<span color='#a6e3a1'> $CAP%</span>"
+fi

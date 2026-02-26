@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# yellow - matches waybar network
+WIFI=$(iwconfig 2>/dev/null | grep -oP 'ESSID:"\K[^"]+')
+if [ -n "$WIFI" ]; then
+    STRENGTH=$(iwconfig 2>/dev/null | grep -oP 'Signal level=\K-?[0-9]+')
+    # convert dBm to percent roughly
+    PCT=$(awk "BEGIN { p=int(($STRENGTH+100)*2); print (p>100?100:(p<0?0:p)) }")
+    echo "<span color='#f9e2af'> $WIFI ($PCT%)</span>"
+else
+    # fallback: ethernet or disconnected
+    ETH=$(ip link show up | grep -v lo | grep -v LOOPBACK | awk -F: '/state UP/{print $2}' | tr -d ' ' | head -1)
+    [ -n "$ETH" ] && echo "<span color='#f9e2af'> $ETH</span>" || echo "<span color='#585b70'> disconnected</span>"
+fi

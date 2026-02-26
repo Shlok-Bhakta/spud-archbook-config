@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# blue - matches waybar pulseaudio
+VOL=$(pamixer --get-volume 2>/dev/null)
+MUTED=$(pamixer --get-mute 2>/dev/null)
+if [ "$MUTED" = "true" ]; then
+    echo "<span color='#585b70'>  muted</span>"
+elif [ "$VOL" -le 33 ]; then
+    echo "<span color='#89b4fa'>  $VOL%</span>"
+elif [ "$VOL" -le 66 ]; then
+    echo "<span color='#89b4fa'>  $VOL%</span>"
+else
+    echo "<span color='#89b4fa'> $VOL%</span>"
+fi

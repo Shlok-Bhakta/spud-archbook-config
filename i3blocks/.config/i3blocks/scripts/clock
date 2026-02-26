@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# maroon - matches waybar clock
+DATE=$(date '+%I:%M %p  %A %b %d')
+echo "<span color='#eba0ac'>  $DATE</span>"

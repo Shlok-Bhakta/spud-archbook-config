@@ -66,9 +66,9 @@ return {
           java = { exec = "javac", args = { "$(FABSPATH)" } },
         },
         run_command = {
-          c    = { exec = "sh", args = { "-c", "$(ABSDIR)/solution; rm -f $(ABSDIR)/solution" } },
-          cpp  = { exec = "sh", args = { "-c", "$(ABSDIR)/solution; rm -f $(ABSDIR)/solution" } },
-          rust = { exec = "sh", args = { "-c", "$(ABSDIR)/solution; rm -f $(ABSDIR)/solution" } },
+          c    = { exec = vim.fn.expand("~/dotfiles/run-and-clean.sh"), args = { "$(ABSDIR)/solution" } },
+          cpp  = { exec = vim.fn.expand("~/dotfiles/run-and-clean.sh"), args = { "$(ABSDIR)/solution" } },
+          rust = { exec = vim.fn.expand("~/dotfiles/run-and-clean.sh"), args = { "$(ABSDIR)/solution" } },
           python = { exec = "python", args = { "$(FNAME)" } },
           java = { exec = "java", args = { "$(FNOEXT)" } },
         },

@@ -49,7 +49,7 @@ return {
         running_directory = ".",
         testcases_directory = ".",
         compile_command = {
-          c = { exec = "gcc", args = { "-Wall", "$(FABSPATH)", "-o", "$(FNOEXT)" } },
+          c = { exec = "gcc", args = { "-Wall", "$(FABSPATH)", "-o", "$(ABSDIR)/solution" } },
           cpp = {
             exec = "clang++",
             args = {
@@ -59,16 +59,16 @@ return {
               "-include-pch", pch_file,
               "$(FABSPATH)",
               "-o",
-              "$(FNOEXT)",
+              "$(ABSDIR)/solution",
             },
           },
-          rust = { exec = "rustc", args = { "$(FABSPATH)" } },
+          rust = { exec = "rustc", args = { "$(FABSPATH)", "-o", "$(ABSDIR)/solution" } },
           java = { exec = "javac", args = { "$(FABSPATH)" } },
         },
         run_command = {
-          c    = { exec = "sh", args = { "-c", "./$(FNOEXT); rm -f ./$(FNOEXT)" } },
-          cpp  = { exec = "sh", args = { "-c", "./$(FNOEXT); rm -f ./$(FNOEXT)" } },
-          rust = { exec = "sh", args = { "-c", "./$(FNOEXT); rm -f ./$(FNOEXT)" } },
+          c    = { exec = "sh", args = { "-c", "$(ABSDIR)/solution; rm -f $(ABSDIR)/solution" } },
+          cpp  = { exec = "sh", args = { "-c", "$(ABSDIR)/solution; rm -f $(ABSDIR)/solution" } },
+          rust = { exec = "sh", args = { "-c", "$(ABSDIR)/solution; rm -f $(ABSDIR)/solution" } },
           python = { exec = "python", args = { "$(FNAME)" } },
           java = { exec = "java", args = { "$(FNOEXT)" } },
         },

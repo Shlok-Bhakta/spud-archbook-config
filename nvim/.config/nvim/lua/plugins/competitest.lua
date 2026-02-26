@@ -66,9 +66,9 @@ return {
           java = { exec = "javac", args = { "$(FABSPATH)" } },
         },
         run_command = {
-          c = { exec = "./$(FNOEXT)" },
-          cpp = { exec = "./$(FNOEXT)" },
-          rust = { exec = "./$(FNOEXT)" },
+          c    = { exec = "sh", args = { "-c", "./$(FNOEXT); rm -f ./$(FNOEXT)" } },
+          cpp  = { exec = "sh", args = { "-c", "./$(FNOEXT); rm -f ./$(FNOEXT)" } },
+          rust = { exec = "sh", args = { "-c", "./$(FNOEXT); rm -f ./$(FNOEXT)" } },
           python = { exec = "python", args = { "$(FNAME)" } },
           java = { exec = "java", args = { "$(FNOEXT)" } },
         },

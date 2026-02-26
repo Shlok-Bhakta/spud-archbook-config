@@ -2,6 +2,24 @@ return {
   {
     "xeluxee/competitest.nvim",
     dependencies = "MunifTanjim/nui.nvim",
+    keys = {
+      -- group label
+      { "<leader>C", group = "competitest" },
+      -- run
+      { "<leader>Cr", "<cmd>CompetiTest run<cr>",            desc = "Run testcases" },
+      { "<leader>CR", "<cmd>CompetiTest run_no_compile<cr>", desc = "Run (no compile)" },
+      { "<leader>Cu", "<cmd>CompetiTest show_ui<cr>",        desc = "Show UI" },
+      -- testcase management
+      { "<leader>Ca", "<cmd>CompetiTest add_testcase<cr>",    desc = "Add testcase" },
+      { "<leader>Ce", "<cmd>CompetiTest edit_testcase<cr>",   desc = "Edit testcase" },
+      { "<leader>Cd", "<cmd>CompetiTest delete_testcase<cr>", desc = "Delete testcase" },
+      -- receive (competitive-companion)
+      { "<leader>Ct", "<cmd>CompetiTest receive testcases<cr>",    desc = "Receive testcases" },
+      { "<leader>Cp", "<cmd>CompetiTest receive problem<cr>",      desc = "Receive problem" },
+      { "<leader>Cc", "<cmd>CompetiTest receive contest<cr>",      desc = "Receive contest" },
+      { "<leader>Cl", "<cmd>CompetiTest receive persistently<cr>", desc = "Receive persistently" },
+      { "<leader>Cs", "<cmd>CompetiTest receive stop<cr>",         desc = "Stop receiving" },
+    },
     config = function()
       require("competitest").setup({
         runner_ui = {

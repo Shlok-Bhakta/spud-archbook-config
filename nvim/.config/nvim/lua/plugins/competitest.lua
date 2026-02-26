@@ -44,6 +44,9 @@ return {
             { 3, { { 1, "eo" }, { 1, "se" } } },
           },
         },
+        compile_directory = "$(ABSDIR)",
+        running_directory = "$(ABSDIR)",
+        testcases_directory = "$(ABSDIR)",
         compile_command = {
           c = { exec = "gcc", args = { "-Wall", "$(FNAME)", "-o", "$(FNOEXT)" } },
           cpp = {

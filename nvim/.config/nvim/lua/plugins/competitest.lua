@@ -44,11 +44,11 @@ return {
             { 3, { { 1, "eo" }, { 1, "se" } } },
           },
         },
-        compile_directory = "$(ABSDIR)",
-        running_directory = "$(ABSDIR)",
-        testcases_directory = "$(ABSDIR)",
+        compile_directory = ".",
+        running_directory = ".",
+        testcases_directory = ".",
         compile_command = {
-          c = { exec = "gcc", args = { "-Wall", "$(FNAME)", "-o", "$(FNOEXT)" } },
+          c = { exec = "gcc", args = { "-Wall", "$(FABSPATH)", "-o", "$(FNOEXT)" } },
           cpp = {
             exec = "g++",
             args = {
@@ -57,13 +57,13 @@ return {
               "-DLOCAL_DEBUG",
               "-g",
               "-I" .. cpp_dump_include,
-              "$(FNAME)",
+              "$(FABSPATH)",
               "-o",
               "$(FNOEXT)",
             },
           },
-          rust = { exec = "rustc", args = { "$(FNAME)" } },
-          java = { exec = "javac", args = { "$(FNAME)" } },
+          rust = { exec = "rustc", args = { "$(FABSPATH)" } },
+          java = { exec = "javac", args = { "$(FABSPATH)" } },
         },
         run_command = {
           c = { exec = "./$(FNOEXT)" },
